@@ -43,7 +43,7 @@ class TweetCapture:
             result = driver.find_elements_by_css_selector('video')
             if result:
                 video_tag_size = result[0].size
-                print(f'(video tag size):\nwidth:{video_tag_size['width']}\nheight:{video_tag_size['height']}')
+                print(f'(video tag size):\nwidth:{video_tag_size["width"]}\nheight:{video_tag_size["height"]}')
             driver.add_cookie(
                 {"name": "night_mode", "value": str(night_mode or self.night_mode)})
             driver.get(url)
