@@ -30,5 +30,7 @@ def main():
     if len(args.chromedriver) > 0:
         tweet.set_chromedriver_path(args.chromedriver)
     tweet.Fake.create(args.fake_name, args.fake_content, args.fake_username, args.fake_image, args.fake_verified)
-    filename = run(tweet.screenshot(args.url, args.output))
+    filename, video_tag_size = run(tweet.screenshot(args.url, args.output))
+    if video_tag_size:
+        print(f'(video tag size):\nwidth:{video_tag_size["width"]}\nheight:{video_tag_size["height"]}')
     print(f"Screenshot is saved: {filename}")

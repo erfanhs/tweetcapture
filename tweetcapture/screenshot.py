@@ -37,13 +37,13 @@ class TweetCapture:
         if self.lang:
             url += "?lang=" + self.lang
 
+        video_tag_size = None
         driver = await get_driver(self.chrome_opts, self.driver_path)
         try:
             driver.get(url)
             result = driver.find_elements_by_css_selector('video')
             if result:
                 video_tag_size = result[0].size
-                print(f'(video tag size):\nwidth:{video_tag_size["width"]}\nheight:{video_tag_size["height"]}')
             driver.add_cookie(
                 {"name": "night_mode", "value": str(night_mode or self.night_mode)})
             driver.get(url)
@@ -64,7 +64,7 @@ class TweetCapture:
             driver.close()
         except:
             driver.close()
-        return path
+        return (path, video_tag_size)
         
     def set_wait_time(self, time):
         if 1.0 <= time <= 10.0: 
