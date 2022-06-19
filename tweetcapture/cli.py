@@ -12,6 +12,7 @@ def parse_args():
     parser.add_argument('--lang', type=str,help="Browser language code (tr,en,es,..)", default="")
     parser.add_argument('--chromedriver', type=str, help="Custom chromedriver path", default="")
     parser.add_argument('-o', '--output', type=str, help="Output file name", default="")
+    parser.add_argument('--media-type', type=str, help="Media type of tweet", default="")
     parser.add_argument('--fake-name', type=str, help="Fake account name", default="")
     parser.add_argument('--fake-username', type=str, help="Fake account username", default="")
     parser.add_argument('--fake-content', type=str, help="Fake tweet content", default=None)
@@ -24,7 +25,8 @@ def parse_args():
 
 def main():
     args = parse_args()
-    tweet = TweetCapture(args.mode, args.night_mode)
+    print(args.media_type)
+    tweet = TweetCapture(args.mode, args.night_mode, args.media_type)
     tweet.set_lang(args.lang)
     tweet.set_wait_time(args.t)
     if len(args.chromedriver) > 0:

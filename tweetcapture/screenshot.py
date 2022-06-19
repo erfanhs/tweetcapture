@@ -4,6 +4,7 @@ from tweetcapture.utils.utils import is_valid_tweet_url, get_tweet_file_name, ge
 from os.path import abspath
 from tweetcapture.screenshot_fake import TweetCaptureFake
 import base64
+import time
 
 class TweetCapture:
     driver = None
@@ -15,9 +16,10 @@ class TweetCapture:
     lang = None
     Fake = None
 
-    def __init__(self, mode=0, night_mode=0):
+    def __init__(self, mode=0, night_mode=0, media_type=""):
         self.set_night_mode(night_mode)
         self.set_mode(mode)
+        self.media_type = media_type
         self.driver_path = get_chromedriver_default_path()
         self.Fake = TweetCaptureFake()
 
@@ -41,9 +43,20 @@ class TweetCapture:
         driver = await get_driver(self.chrome_opts, self.driver_path)
         try:
             driver.get(url)
-            result = driver.find_elements_by_css_selector('video')
-            if result:
-                video_tag_size = result[0].size
+            if self.media_type and self.media_type == 'video':
+                counter = 0
+                while True:
+                    if counter == 6:
+                        break
+                    containers = driver.find_elements_by_css_selector('article')
+                    if containers:
+                        container = containers[0]
+                        result = container.find_elements_by_css_selector('video')
+                        if result:
+                            video_tag_size = result[0].size
+                            break
+                    counter+=1
+                    time.sleep(5)
             driver.add_cookie(
                 {"name": "night_mode", "value": str(night_mode or self.night_mode)})
             driver.get(url)
