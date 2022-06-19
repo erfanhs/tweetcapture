@@ -25,7 +25,6 @@ def parse_args():
 
 def main():
     args = parse_args()
-    print(args.media_type)
     tweet = TweetCapture(args.mode, args.night_mode, args.media_type)
     tweet.set_lang(args.lang)
     tweet.set_wait_time(args.t)

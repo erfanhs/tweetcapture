@@ -54,6 +54,7 @@ class TweetCapture:
                         result = container.find_elements_by_css_selector('video')
                         if result:
                             video_tag_size = result[0].size
+                            print('video element found after %s tries.' % str(counter+1))
                             break
                     counter+=1
                     time.sleep(5)
